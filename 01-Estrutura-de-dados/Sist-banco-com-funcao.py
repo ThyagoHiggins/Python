@@ -18,6 +18,7 @@ historico_saque = list()
 saldo= 600
 qtdsaques = 0
 user = list()
+contas = list()
 
 
 def menu():
@@ -139,6 +140,25 @@ def verficacpf(cpf, user):
     verifcado = [users for users in user if users["cpf"]== cpf]
     return verifcado[0] if verficado else None
 
+def nova_conta(agencia,user,number):
+    cpf = input("Insira seu CPF [somente números]: ")
+    novaconta = verficacpf(cpf,users)
+
+    if nova_conta:
+        print ("A conta foi criada")
+        return {"agencia": agencia,"conta-corrente":number, "user":novaconta}
+
+
+def todas_contas(contas):
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("=" * 100)
+
+        print(linha)
 
 def inicio():
     agencia = "0001"
@@ -171,9 +191,13 @@ def inicio():
         elif op == 3:
             extrato()
         elif op == 4:
-            print()
+            todas_contas(contas)
         elif op == 5:
-            print()
+            number = len(contas)+1
+            new = nova_conta (agencia,user,number)
+
+            if new:
+                contas.append(new)
         elif op == 6:
             usuario_novo(user)
         elif op == 0:
@@ -185,6 +209,6 @@ def inicio():
             print ( "Programa encerrado")
             break
         else:
-            print("Selecione uma opção válida")
+            print("Selecione uma opção válida!!!!")
             
 inicio()
